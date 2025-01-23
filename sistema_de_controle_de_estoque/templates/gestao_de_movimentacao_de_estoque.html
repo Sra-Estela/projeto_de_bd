@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Movimentação de Estoque</title>
+    <link rel="stylesheet" href="../static/gestao_de_movimentacao_de_estoque.css">
+</head>
+<body>
+    <h1>Produto Adicionado com Sucesso!</h1>
+    <p>Detalhes do produto:</p>
+    <ul>
+        <li><b>ID:</b> {{ produto.pro_id }}</li>
+        <li><b>Nome:</b> {{ produto.pro_nome }}</li>
+        <li><b>Custo Inicial:</b> {{ produto.pro_custo }}</li>
+        <li><b>Preço:</b> {{ produto.pro_preco }}</li>
+        <li><b>N° em Estoque:</b> {{ produto.pro_estoque }}</li>
+        <li><b>Descrição de Cadastro:</b> {{ produto.pro_descricao }}</li>
+    </ul>
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
+</body>
+</html>
