@@ -23,3 +23,22 @@ table {
 li > b {
     font-size: 20px;
 }
+
+button {
+    font-size: 1em;
+    padding: 8px 15px;
+    color: #fff;
+    background-color: #e74c3c;  /* Cor vermelha para destacar */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;  /* Espaço entre o nome e o botão */
+}
+
+button:hover {
+    background-color: #c0392b;  /* Cor mais escura no hover */
+}
+
+button:focus {
+    outline: none;
+}

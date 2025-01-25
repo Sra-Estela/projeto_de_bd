@@ -1,11 +1,11 @@
-from flask import Flask, make_response, jsonify, request, url_for, render_template
+from flask import Flask, make_response, jsonify, request, url_for, render_template, redirect
 import mysql.connector
 
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '' #admin
+app.config['MYSQL_PASSWORD'] = 'admin' #admin
 app.config['MYSQL_DB'] = 'db_distribuidora'
 
 def get_db_connection():
@@ -43,22 +43,49 @@ def registrar():
         estoque = request.form['estoque']
         descricao = request.form['descricao']
 
+        db = get_db_connection()
+        cursor = db.cursor()
+
+        # 🔹 Pegando o maior ID existente na tabela
+        cursor.execute('SELECT MAX(pro_id) FROM tb_produto')
+        max_id = cursor.fetchone()[0]  # Retorna o maior ID já existente
+
+        if max_id is None:
+            max_id = 0  # Se não houver registros, começa do zero
+
+        novo_id = max_id + 1  # Define o novo ID
+
+        # 🔹 Inserindo com um ID manual
+        cursor.execute(
+            'INSERT INTO tb_produto (pro_id, pro_nome, pro_custo, pro_preco, pro_estoque, pro_descricao) '
+            'VALUES (%s, %s, %s, %s, %s, %s)',
+            (novo_id, nome, float(custo), float(preco), int(estoque), descricao)
+        )
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        novo_produto = {
+            'pro_id': novo_id,
+            'pro_nome': nome,
+            'pro_custo': float(custo),
+            'pro_preco': float(preco),
+            'pro_estoque': int(estoque),
+            'pro_descricao': descricao
+        }
+
+        return render_template('gestao_de_movimentacao_de_estoque.html', produto=novo_produto)
+
+@app.route('/deletar/<int:pro_id>', methods=['POST'])
+def deletar_produto(pro_id):
     db = get_db_connection()
     cursor = db.cursor()
-    cursor.execute('INSERT INTO tb_produto (pro_nome, pro_custo, pro_preco, pro_estoque, pro_descricao) VALUES (%s, %s, %s, %s, %s)', (nome, float(custo), float(preco), int(estoque), descricao))
+    
+    cursor.execute('DELETE FROM tb_produto WHERE pro_id = %s', (pro_id,))
     db.commit()
-
-    novo_id = cursor.lastrowid
+    
     cursor.close()
     db.close()
 
-    novo_produto = {
-        'pro_id': novo_id,
-        'pro_nome': nome,
-        'pro_custo': float(custo),
-        'pro_preco': float(preco),
-        'pro_estoque': int(estoque),
-        'pro_descricao': descricao
-    }
-
-    return render_template('gestao_de_movimentacao_de_estoque.html', produto=novo_produto)
+    return redirect(url_for('home'))

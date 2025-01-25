@@ -1,4 +1,5 @@
 CREATE DATABASE `db_distribuidora`;
+DROP DATABASE `db_distribuidora`;
 
 USE `db_distribuidora`;
 
@@ -12,7 +13,11 @@ CREATE TABLE `tb_produto` (
 );
 
 -- (13, 'Cadeira de Escritório DXRacer', 1200.00, 1800.00, 25, 'Conforto extremo para longas horas de trabalho ou jogos'),
--- (14, 'Projetor Epson Full HD', 2200.00, 3200.00, 18, 'Imagens de alta qualidade para apresentações e cinema em casa');
+-- (14, 'Projetor Epson Full HD', 2200.00, 3200.00, 18, 'Imagens de alta qualidade para apresentações e cinema em casa'),
+-- (15, 'Fones de Ouvido Bose QuietComfort 35', 1200.00, 1600.00, 50, 'Fones com cancelamento de ruído, ideais para viagens e longas sessões de trabalho'),
+-- (16, 'Câmera Canon EOS 5D Mark IV', 12000.00, 14500.00, 15, 'Câmera profissional com excelente qualidade de imagem para fotógrafos e cineastas'),
+-- (17, 'Impressora HP DeskJet 2775', 250.00, 350.00, 100, 'Impressora multifuncional ideal para uso doméstico e escritório pequeno'),
+-- (18, 'Microfone Condensador Blue Yeti', 900.00, 1200.00, 30, 'Microfone de alta qualidade para gravação de áudio e streaming'),
 
 INSERT INTO `tb_produto` VALUES 
 (1, 'Notebook Lenovo', 2600.90, 3250.00, 27, 'Produto em ótimo estado!'),
@@ -30,4 +35,4 @@ INSERT INTO `tb_produto` VALUES
 
 SELECT * FROM `tb_produto`;
 
-DELETE FROM tb_produto WHERE pro_id<10;
+DELETE FROM `tb_produto` WHERE `pro_id`=14;

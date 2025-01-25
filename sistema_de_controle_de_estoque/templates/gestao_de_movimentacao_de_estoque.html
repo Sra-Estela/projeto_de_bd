@@ -1,3 +1,4 @@
+<!-- templates/gestao_de_movimentacao_de_estoque.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -18,6 +19,12 @@
         <li><b>N° em Estoque:</b> {{ produto.pro_estoque }}</li>
         <li><b>Descrição de Cadastro:</b> {{ produto.pro_descricao }}</li>
     </ul>
+
+    <!-- Botão Excluir -->
+    <form action="{{ url_for('deletar_produto', pro_id=produto.pro_id) }}" method="post">
+        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</button>
+    </form>
+
     <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
 </body>
 </html>
