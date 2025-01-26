@@ -1,15 +1,31 @@
-CREATE DATABASE `db_distribuidora`;
-DROP DATABASE `db_distribuidora`;
+CREATE DATABASE db_distribuidora;
+DROP DATABASE db_distribuidora;
 
-USE `db_distribuidora`;
+USE db_distribuidora;
 
-CREATE TABLE `tb_produto` (
-    `pro_id` int primary key not null auto_increment,
-    `pro_nome` varchar(100) not null,
-    `pro_custo` float not null,
-    `pro_preco` float not null,
-    `pro_estoque` int not null,
-    `pro_descricao` varchar(1000) not null
+CREATE TABLE tb_produto (
+    pro_id int primary key not null auto_increment,
+    pro_nome varchar(100) not null,
+    pro_custo float not null,
+    pro_preco float not null,
+    pro_estoque int not null,
+    pro_descricao varchar(1000) not null
+);
+
+CREATE TABLE tb_categoria (
+	cat_id int primary key not null  auto_increment,
+    cat_pro_id int,
+    cat_nome varchar(100),
+    FOREIGN KEY (cat_pro_id) REFERENCES tb_produto(pro_id)
+);
+
+CREATE TABLE tb_movimentacoes (
+	mov_id int primary key not null auto_increment,
+    mov_pro_id int,
+    mov_quantidade int,
+    mov_tipo ENUM('Entrada', 'Saída'),
+    mov_data datetime,
+    FOREIGN KEY (mov_pro_id) REFERENCES tb_produto(pro_id)
 );
 
 -- (13, 'Cadeira de Escritório DXRacer', 1200.00, 1800.00, 25, 'Conforto extremo para longas horas de trabalho ou jogos'),
@@ -19,7 +35,7 @@ CREATE TABLE `tb_produto` (
 -- (17, 'Impressora HP DeskJet 2775', 250.00, 350.00, 100, 'Impressora multifuncional ideal para uso doméstico e escritório pequeno'),
 -- (18, 'Microfone Condensador Blue Yeti', 900.00, 1200.00, 30, 'Microfone de alta qualidade para gravação de áudio e streaming'),
 
-INSERT INTO `tb_produto` VALUES 
+INSERT INTO tb_produto VALUES 
 (1, 'Notebook Lenovo', 2600.90, 3250.00, 27, 'Produto em ótimo estado!'),
 (2, 'Galaxy Sansung S24 FE', '5600.99', 6200.90, '10', 'A câmera é incrível'),
 (3, 'Geladeira Brastemp', '2599.99', '3000.00', '54', 'Muito espaço disponível'),
@@ -33,6 +49,6 @@ INSERT INTO `tb_produto` VALUES
 (11, 'Secadora de Roupas Electrolux', 1300.00, 1700.00, 30, 'Secagem rápida e eficiente com funções inteligentes'),
 (12, 'Console PlayStation 5', 3800.00, 4500.00, 60, 'Experiência de jogos imersiva com gráficos e desempenho incríveis');
 
-SELECT * FROM `tb_produto`;
+SELECT * FROM tb_produto;
 
-DELETE FROM `tb_produto` WHERE `pro_id`=14;
+DELETE FROM tb_produto WHERE pro_id<100;
