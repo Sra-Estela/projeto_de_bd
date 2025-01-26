@@ -38,6 +38,8 @@ def get_produto():
 def registrar():
     if request.method == 'POST':
         nome = request.form['nome']
+        data = request.form['datetime']
+        categoria = request.form['categoria']  # Pegamos a categoria selecionada
         custo = request.form['custo']
         preco = request.form['preco']
         estoque = request.form['estoque']
@@ -55,12 +57,19 @@ def registrar():
 
         novo_id = max_id + 1  # Define o novo ID
 
-        # 🔹 Inserindo com um ID manual
+        # 🔹 Inserindo o novo produto na tabela tb_produto
         cursor.execute(
-            'INSERT INTO tb_produto (pro_id, pro_nome, pro_custo, pro_preco, pro_estoque, pro_descricao) '
-            'VALUES (%s, %s, %s, %s, %s, %s)',
-            (novo_id, nome, float(custo), float(preco), int(estoque), descricao)
+            'INSERT INTO tb_produto (pro_id, pro_nome, pro_data, pro_custo, pro_preco, pro_estoque, pro_descricao) '
+            'VALUES (%s, %s, %s, %s, %s, %s, %s)',
+            (novo_id, nome, data, float(custo), float(preco), int(estoque), descricao)
         )
+
+        # 🔹 Inserindo a categoria na tabela tb_categoria
+        cursor.execute(
+            'INSERT INTO tb_categoria (cat_pro_id, cat_nome) VALUES (%s, %s)',
+            (novo_id, categoria)
+        )
+
         db.commit()
 
         cursor.close()
@@ -72,10 +81,13 @@ def registrar():
             'pro_custo': float(custo),
             'pro_preco': float(preco),
             'pro_estoque': int(estoque),
-            'pro_descricao': descricao
+            'pro_descricao': descricao,
+            'pro_data': data,
+            'categoria': categoria
         }
 
-        return render_template('gestao_de_movimentacao_de_estoque.html', produto=novo_produto)
+        return render_template('adicionado.html', produto=novo_produto)
+
 
 @app.route('/deletar/<int:pro_id>', methods=['POST'])
 def deletar_produto(pro_id):

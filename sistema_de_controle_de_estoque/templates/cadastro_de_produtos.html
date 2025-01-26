@@ -8,21 +8,40 @@
     <link rel="stylesheet" href="../static/cadastro_de_produtos.css">
 </head>
 <body>
-    <!-- nome, descrição, preço de custo, 
-    preço de venda e quantidade inicial em estoque. -->
-    <h1>Forneça as informações do Produto:</h1>
+    <h1>Cadastre as informações do produto:</h1>
     <form action="{{ url_for('registrar') }}" method="post">
         <label for="nome">Nome:</label>
-        <input type="text" name="nome" id="nome">
+        <input type="text" name="nome" id="nome" placeholder="Digite o nome do produto" required>
+    
+        <label for="data">Data de Cadastro:</label>
+        <input type="datetime-local" name="datetime" id="datetime" required>
+    
+        <label for="categoria">Categoria:</label>
+        <select name="categoria" id="categoria" required>
+            <option value="Eletrodoméstico">Eletrodoméstico</option>
+            <option value="Eletrônicos">Eletrônicos</option>
+            <option value="Acessórios">Acessórios</option>
+            <option value="Móveis">Móveis</option>
+            <option value="Vestuário">Vestuário</option>
+            <option value="Brinquedos">Brinquedos</option>
+            <option value="Artigos Esportivos">Artigos Esportivos</option>
+            <option value="Alimentos">Alimentos</option>
+            <option value="Cosméticos">Cosméticos</option>
+        </select>
+    
         <label for="custo">Custo:</label>
-        <input type="number" name="custo" id="custo">
+        <input type="number" name="custo" id="custo" placeholder="Digite o custo do produto" required>
+    
         <label for="preco">Preço:</label>
-        <input type="number" name="preco" id="preco">
+        <input type="number" name="preco" id="preco" placeholder="Digite o preço do produto" required>
+    
         <label for="estoque">Quantidade em estoque:</label>
-        <input type="number" name="estoque" id="estoque">
+        <input type="number" name="estoque" id="estoque" placeholder="Quantidade disponível" required>
+    
         <label for="descricao">Descrição:</label>
-        <textarea name="descricao" id="descricao" cols="50" rows="10" placeholder="Digite aqui sua descrição"></textarea>
-        <input type="submit" value="Enviar">
+        <textarea name="descricao" id="descricao" cols="50" rows="10" placeholder="Digite uma descrição detalhada" required></textarea>
+    
+        <input type="submit" value="Cadastrar Produto">
     </form>
 </body>
 </html>
