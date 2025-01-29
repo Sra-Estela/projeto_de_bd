@@ -14,7 +14,7 @@ CREATE TABLE tb_produto (
 
 CREATE TABLE tb_categoria (
     cat_id INT PRIMARY KEY AUTO_INCREMENT,
-    cat_pro_id INT,
+    cat_pro_id INT NOT NULL,
     cat_nome VARCHAR(100) NOT NULL,
     FOREIGN KEY (cat_pro_id) REFERENCES tb_produto(pro_id) ON DELETE CASCADE
 );
@@ -70,7 +70,8 @@ INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo) VALUES
 (11, 3, 'Entrada'),
 (12, 9, 'Entrada');
 
-SELECT * 
-FROM tb_produto 
+SELECT * FROM tb_produto 
 LEFT JOIN tb_categoria ON tb_categoria.cat_pro_id = tb_produto.pro_id 
 LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id;
+
+DELETE FROM tb_produto WHERE pro_id=14;

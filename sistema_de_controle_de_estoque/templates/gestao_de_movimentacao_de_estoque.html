@@ -6,25 +6,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Movimentação de Estoque</title>
-    <link rel="stylesheet" href="../static/gestao_de_movimentacao_de_estoque.css">
+    <link rel="stylesheet" href="../static/cadastro_de_produtos.css">
 </head>
 <body>
-    <h1>Produto Adicionado com Sucesso!</h1>
-    <p>Detalhes do produto:</p>
-    <ul>
-        <li><b>ID:</b> {{ produto.pro_id }}</li>
-        <li><b>Nome:</b> {{ produto.pro_nome }}</li>
-        <li><b>Custo Inicial:</b> {{ produto.pro_custo }}</li>
-        <li><b>Preço:</b> {{ produto.pro_preco }}</li>
-        <li><b>N° em Estoque:</b> {{ produto.pro_estoque }}</li>
-        <li><b>Descrição de Cadastro:</b> {{ produto.pro_descricao }}</li>
-    </ul>
+    <h1>Registro de Movimentações</h1>
 
-    <!-- Botão Excluir -->
-    <form action="{{ url_for('deletar_produto', pro_id=produto.pro_id) }}" method="post">
-        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</button>
-    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Produto</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Última Movimentação</th>
+                <th>Quantidade Movimentada</th>
+                <th>Tipo de Movimentação</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.pro_id }}</td>
+                <td>{{ produto.pro_nome }}</td>
+                <td>{{ produto.cat_nome if produto.cat_nome else 'Sem Categoria' }}</td>
+                <td>{{ produto.mov_id if produto.mov_id else 'Nenhuma Movimentação' }}</td>
+                <td>{{ produto.mov_quantidade if produto.mov_quantidade else '-' }}</td>
+                <td>{{ produto.mov_tipo if produto.mov_tipo else '-' }}</td>
+                <td>{{ produto.mov_data if produto.mov_data else '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br><br>
 
-    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
+    <p>Fornaça os dados do produto que teve movimentação:</p>
+
+    <form action="registrar_movimentacao" method="post">
+        <!-- mov_pro_id: -->
+        <label for="mov_pro_id">ID do produto:</label>
+        <input type="number" name="mov_pro_id" id="mov_pro_id"><br>
+        <!-- mov_tipo: -->
+        <label for="mov_tipo">Tipo de movimentação:</label>
+        <select name="mov_tipo" id="mov_tipo" required>
+            <option value="entrada">Entrada</option>
+            <option value="saida">Saída</option>
+        </select><br>
+        <!-- mov_data: -->
+        <label for="mov_data">Data da movimentação:</label>
+        <input type="datetime-local" name="mov_data" id="mov_data"><br>
+        <!-- mov_quantidade: -->
+        <label for="mov_quantidade">Quntidade de Produtos:</label>
+        <input type="number" name="mov_quantidade" id="mov_quantidade"><br>
+
+        <input type="submit" value="Registrar">
+    </form><br>
+
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a><br><br>
 </body>
 </html>
