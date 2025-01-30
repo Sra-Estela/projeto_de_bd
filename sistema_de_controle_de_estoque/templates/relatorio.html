@@ -7,13 +7,110 @@
     <title>Relatórios e Consultas Avançadas</title>
 </head>
 <body>
-    <h1>Carros Registrados</h1>
-    <ul>
-        {% for produto in produtos %}
-        <li>
-            ID: {{ produto.pro_id }} - Nome: {{ produto.pro_nome }} - Preço: {{ produto.pro_preco }} - Estoque: {{ produto.pro_estoque }}
-        </li>
-        {% endfor %}
-    </ul>
+    <form action="relatorio" method="post">
+        <label for="Data">Data:</label><br>
+        <input type="datetime-local" name="data" id="data"><br><br>
+        <!-- --- -->
+        <label for="Categoria">Categoria:</label><br>
+        <input type="text" name="categoria" id="categoria"><br><br>
+        <!-- --- -->
+        <label for="Tipo">Tipo:</label><br>
+        <input type="text" name="tipo" id="tipo"><br><br>
+        <!-- --- -->
+        <label for="Estoque">Estoque:</label><br>
+        <input type="number" name="estoque" id="estoque"><br><br>
+        <!-- --- -->
+        <input type="submit" value="Pesquisar">
+    </form><br>
+    <!-- <section>
+        <h2>Produtos com Estoque Baixo</h2>
+        <p>Lista de produtos com menos de 10 unidades em estoque.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in low_stock_products %}
+                <tr>
+                    <td>{{ product['name'] }}</td>
+                    <td>{{ product['description'] }}</td>
+                    <td>{{ product['quantity'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    
+    <section>
+        <h2>Histórico de Movimentações por Produto</h2>
+        <p>Selecione um produto para visualizar todas as suas movimentações de estoque.</p>
+        <form method="GET" action="/movements">
+            <label for="product_id">Produto:</label>
+            <select id="product_id" name="product_id">
+                {% for product in all_products %}
+                <option value="{{ product['id'] }}">{{ product['name'] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Ver Movimentações</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Quantidade</th>
+                    <th>Motivo</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movement in movements %}
+                <tr>
+                    <td>{{ movement['date'] }}</td>
+                    <td>{{ movement['quantity'] }}</td>
+                    <td>{{ movement['reason'] }}</td>
+                    <td>{{ movement['type'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Total de Entradas e Saídas</h2>
+        <p>Escolha um intervalo de datas para visualizar o total de movimentações de estoque.</p>
+    </section> -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Produto</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Última Movimentação</th>
+                <th>Quantidade Movimentada</th>
+                <th>Tipo de Movimentação</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.pro_id }}</td>
+                <td>{{ produto.pro_nome }}</td>
+                <td>{{ produto.cat_nome if produto.cat_nome else 'Sem Categoria' }}</td>
+                <td>{{ produto.mov_id if produto.mov_id else 'Nenhuma Movimentação' }}</td>
+                <td>{{ produto.mov_quantidade if produto.mov_quantidade else '-' }}</td>
+                <td>{{ produto.mov_tipo if produto.mov_tipo else '-' }}</td>
+                <td>{{ produto.mov_data if produto.mov_data else '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
 </body>
 </html>

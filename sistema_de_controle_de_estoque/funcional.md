@@ -385,7 +385,9 @@ button:hover {
         <textarea name="descricao" id="descricao" cols="50" rows="10" placeholder="Digite uma descrição detalhada" required></textarea>
     
         <input type="submit" value="Cadastrar Produto">
-    </form>
+    </form><br>
+
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a><br><br>
 </body>
 </html>
 ```
@@ -402,36 +404,84 @@ button:hover {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Movimentação de Estoque</title>
-    <link rel="stylesheet" href="../static/gestao_de_movimentacao_de_estoque.css">
+    <link rel="stylesheet" href="../static/cadastro_de_produtos.css">
 </head>
 <body>
-    <form action="#" method="post">
+    <h1>Registro de Movimentações</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Produto</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Última Movimentação</th>
+                <th>Quantidade Movimentada</th>
+                <th>Tipo de Movimentação</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.pro_id }}</td>
+                <td>{{ produto.pro_nome }}</td>
+                <td>{{ produto.cat_nome if produto.cat_nome else 'Sem Categoria' }}</td>
+                <td>{{ produto.mov_id if produto.mov_id else 'Nenhuma Movimentação' }}</td>
+                <td>{{ produto.mov_quantidade if produto.mov_quantidade else '-' }}</td>
+                <td>{{ produto.mov_tipo if produto.mov_tipo else '-' }}</td>
+                <td>{{ produto.mov_data if produto.mov_data else '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br><br>
+
+    <p>Fornaça os dados do produto que teve movimentação:</p>
+
+    <form action="registrar_movimentacao" method="post">
         <!-- mov_pro_id: -->
-        <label for="pro_id">ID do produto:</label><br>
-        <input type="number" name="produto_id" id="produto_id"><br><br>
+        <label for="mov_pro_id">ID do produto:</label>
+        <input type="number" name="mov_pro_id" id="mov_pro_id"><br>
         <!-- mov_tipo: -->
-        <label for="mov_tipo">Tipo de movimentação:</label><br>
-        <select name="tipo" id="tipo" required>
+        <label for="mov_tipo">Tipo de movimentação:</label>
+        <select name="mov_tipo" id="mov_tipo" required>
             <option value="entrada">Entrada</option>
             <option value="saida">Saída</option>
-        </select><br><br>
+        </select><br>
         <!-- mov_data: -->
-        <label for="mov_data">Data da movimentação:</label><br>
-        <input type="datetime-local" name="date_time" id="date_time"><br><br>
+        <label for="mov_data">Data da movimentação:</label>
+        <input type="datetime-local" name="mov_data" id="mov_data"><br>
         <!-- mov_quantidade: -->
-        <label for="mov_quantidade">Quntidade de Produtos:</label><br>
-        <input type="number" name="mov_quant" id="mov_quant">
+        <label for="mov_quantidade">Quntidade de Produtos:</label>
+        <input type="number" name="mov_quantidade" id="mov_quantidade"><br>
+
+        <input type="submit" value="Registrar">
     </form><br>
 
-    <input type="submit" value="Registrar"><br><br>
-
-    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a><br><br>
 </body>
 </html>
 
 ```
 
 ---
+
+### Arquivo `templates/index.html`:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+</head>
+<body>
+    <a href="{{ url_for('cadastro')}}">Cadastro de Produtos</a><br><br>
+    <a href="{{ url_for('registrar_movimentacao')}}">Registrar Movimentação</a><br><br>
+    <a href="{{ url_for('relatorio') }}">Relatorio dos Registros</a>
+</body>
+</html>
+```
 
 ### Arquivo `templates/relatoria.html`:
 ```html
@@ -444,14 +494,111 @@ button:hover {
     <title>Relatórios e Consultas Avançadas</title>
 </head>
 <body>
-    <h1>Carros Registrados</h1>
-    <ul>
-        {% for produto in produtos %}
-        <li>
-            ID: {{ produto.pro_id }} - Nome: {{ produto.pro_nome }} - Preço: {{ produto.pro_preco }} - Estoque: {{ produto.pro_estoque }}
-        </li>
-        {% endfor %}
-    </ul>
+    <form action="relatorio" method="post">
+        <label for="Data">Data:</label><br>
+        <input type="datetime-local" name="data" id="data"><br><br>
+        <!-- --- -->
+        <label for="Categoria">Categoria:</label><br>
+        <input type="text" name="categoria" id="categoria"><br><br>
+        <!-- --- -->
+        <label for="Tipo">Tipo:</label><br>
+        <input type="text" name="tipo" id="tipo"><br><br>
+        <!-- --- -->
+        <label for="Estoque">Estoque:</label><br>
+        <input type="number" name="estoque" id="estoque"><br><br>
+        <!-- --- -->
+        <input type="submit" value="Pesquisar">
+    </form><br>
+    <!-- <section>
+        <h2>Produtos com Estoque Baixo</h2>
+        <p>Lista de produtos com menos de 10 unidades em estoque.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in low_stock_products %}
+                <tr>
+                    <td>{{ product['name'] }}</td>
+                    <td>{{ product['description'] }}</td>
+                    <td>{{ product['quantity'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    
+    <section>
+        <h2>Histórico de Movimentações por Produto</h2>
+        <p>Selecione um produto para visualizar todas as suas movimentações de estoque.</p>
+        <form method="GET" action="/movements">
+            <label for="product_id">Produto:</label>
+            <select id="product_id" name="product_id">
+                {% for product in all_products %}
+                <option value="{{ product['id'] }}">{{ product['name'] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Ver Movimentações</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Quantidade</th>
+                    <th>Motivo</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movement in movements %}
+                <tr>
+                    <td>{{ movement['date'] }}</td>
+                    <td>{{ movement['quantity'] }}</td>
+                    <td>{{ movement['reason'] }}</td>
+                    <td>{{ movement['type'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Total de Entradas e Saídas</h2>
+        <p>Escolha um intervalo de datas para visualizar o total de movimentações de estoque.</p>
+    </section> -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Produto</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Última Movimentação</th>
+                <th>Quantidade Movimentada</th>
+                <th>Tipo de Movimentação</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.pro_id }}</td>
+                <td>{{ produto.pro_nome }}</td>
+                <td>{{ produto.cat_nome if produto.cat_nome else 'Sem Categoria' }}</td>
+                <td>{{ produto.mov_id if produto.mov_id else 'Nenhuma Movimentação' }}</td>
+                <td>{{ produto.mov_quantidade if produto.mov_quantidade else '-' }}</td>
+                <td>{{ produto.mov_tipo if produto.mov_tipo else '-' }}</td>
+                <td>{{ produto.mov_data if produto.mov_data else '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
 </body>
 </html>
 ```
@@ -459,7 +606,9 @@ button:hover {
 ### Arquivo `app.py`:
 ```python
 from flask import Flask, make_response, jsonify, request, url_for, render_template, redirect
+from datetime import datetime
 import mysql.connector
+import pymysql
 
 app = Flask(__name__)
 
@@ -478,6 +627,10 @@ def get_db_connection():
 
 @app.route('/')
 def home():
+    return render_template('index.html')
+
+@app.route('/cadastro')
+def cadastro():
     return render_template('cadastro_de_produtos.html')
 
 @app.route('/banco', methods=['GET'])
@@ -498,8 +651,8 @@ def get_produto():
 def registrar():
     if request.method == 'POST':
         nome = request.form['nome']
-        data = request.form['datetime']
-        categoria = request.form['categoria']  # Pegamos a categoria selecionada
+        data = request.form.get('datetime', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        categoria = request.form['categoria']  
         custo = request.form['custo']
         preco = request.form['preco']
         estoque = request.form['estoque']
@@ -507,24 +660,21 @@ def registrar():
 
         db = get_db_connection()
         cursor = db.cursor()
-
-        # 🔹 Pegando o maior ID existente na tabela
+        
         cursor.execute('SELECT MAX(pro_id) FROM tb_produto')
-        max_id = cursor.fetchone()[0]  # Retorna o maior ID já existente
+        max_id = cursor.fetchone()[0]  
 
         if max_id is None:
-            max_id = 0  # Se não houver registros, começa do zero
+            max_id = 0 
 
-        novo_id = max_id + 1  # Define o novo ID
-
-        # 🔹 Inserindo o novo produto na tabela tb_produto
+        novo_id = max_id + 1
+        
         cursor.execute(
             'INSERT INTO tb_produto (pro_id, pro_nome, pro_data, pro_custo, pro_preco, pro_estoque, pro_descricao) '
             'VALUES (%s, %s, %s, %s, %s, %s, %s)',
             (novo_id, nome, data, float(custo), float(preco), int(estoque), descricao)
         )
-
-        # 🔹 Inserindo a categoria na tabela tb_categoria
+        
         cursor.execute(
             'INSERT INTO tb_categoria (cat_pro_id, cat_nome) VALUES (%s, %s)',
             (novo_id, categoria)
@@ -563,40 +713,57 @@ def deletar_produto(pro_id):
     return redirect(url_for('home'))
 
 # Sei lá:
-@app.route('/gestao_de_movimentacao_de_estoque', methods=['GET', 'POST'])
-def gestao_de_movimentacao():
+@app.route('/gestao_de_movimentacao', methods=['GET', 'POST'])
+def registrar_movimentacao():
     if request.method == 'POST':
-        produto_id = request.form['produto_id']
-        tipo = request.form['tipo']
-        data = request.form['date_time']
-        quantidade = request.form['mov_quant']
-        
-        # Conectando ao banco de dados
+        mov_pro_id = request.form.get('mov_pro_id')
+        mov_quantidade = request.form.get('mov_quantidade')
+        mov_tipo = request.form.get('mov_tipo')
+        mov_data = request.form.get('mov_date', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+        # Validação de dados
+        if not mov_pro_id or not mov_quantidade or not mov_tipo:
+            return "Erro: Todos os campos são obrigatórios!"
+
+        # Conectar ao banco
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Inserindo a movimentação no banco de dados
-        cursor.execute('''
-            INSERT INTO tb_movimentacoes (mov_id, mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
-            VALUES (%s, %s, %s, %s, %s)
-        ''', (produto_id, produto_id, quantidade, tipo, data))
+        try:
+            # Inserindo a movimentação no banco de dados (mov_id autoincrement)
+            cursor.execute('''
+                INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
+                VALUES (%s, %s, %s, %s)
+            ''', (mov_pro_id, mov_quantidade, mov_tipo, mov_data))
 
-        # Commitando a transação
-        conn.commit()
-        cursor.close()
-        conn.close()
+            conn.commit()
 
-        return redirect(url_for('gestao_de_movimentacao'))
+        except Exception as e:
+            return f"Erro ao registrar movimentação: {e}"
+        
+        finally:
+            cursor.close()
+            conn.close()
 
-    # Carregar produtos para o template
+        return redirect(url_for('registrar_movimentacao'))
+
+    # Executar a query para obter produtos, categorias e movimentações
     conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT pro_id, pro_nome FROM tb_produto')
+    cursor = conn.cursor(pymysql.cursors.DictCursor)  # Para obter os resultados como dicionários
+    cursor.execute('''
+        SELECT * FROM tb_produto 
+        LEFT JOIN tb_categoria ON tb_categoria.cat_pro_id = tb_produto.pro_id 
+        LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
+    ''')
     produtos = cursor.fetchall()
     cursor.close()
     conn.close()
 
     return render_template('gestao_de_movimentacao_de_estoque.html', produtos=produtos)
+
+@app.route('/relatorio')
+def relatorio():
+    return render_template('relatorio.html')
 
 ```
 
@@ -676,12 +843,11 @@ INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo) VALUES
 (11, 3, 'Entrada'),
 (12, 9, 'Entrada');
 
-SELECT * 
-FROM tb_produto 
+SELECT * FROM tb_produto 
 LEFT JOIN tb_categoria ON tb_categoria.cat_pro_id = tb_produto.pro_id 
 LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id;
 
-DELETE FROM tb_produto WHERE pro_id=13;
+DELETE FROM tb_produto WHERE pro_id=14;
 ```
 
 ___

@@ -1,4 +1,3 @@
-<!-- templates/gestao_de_movimentacao_de_estoque.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,46 +15,41 @@
             <tr>
                 <th>ID Produto</th>
                 <th>Nome</th>
-                <th>Categoria</th>
-                <th>Última Movimentação</th>
                 <th>Quantidade Movimentada</th>
                 <th>Tipo de Movimentação</th>
                 <th>Data</th>
             </tr>
         </thead>
         <tbody>
-            {% for produto in produtos %}
+            {% for movimentacao in movimentacoes %}
             <tr>
-                <td>{{ produto.pro_id }}</td>
-                <td>{{ produto.pro_nome }}</td>
-                <td>{{ produto.cat_nome if produto.cat_nome else 'Sem Categoria' }}</td>
-                <td>{{ produto.mov_id if produto.mov_id else 'Nenhuma Movimentação' }}</td>
-                <td>{{ produto.mov_quantidade if produto.mov_quantidade else '-' }}</td>
-                <td>{{ produto.mov_tipo if produto.mov_tipo else '-' }}</td>
-                <td>{{ produto.mov_data if produto.mov_data else '-' }}</td>
+                <td>{{ movimentacao.mov_pro_id }}</td>
+                <td>{{ movimentacao.pro_nome }}</td>
+                <td>{{ movimentacao.mov_quantidade }}</td>
+                <td>{{ movimentacao.mov_tipo }}</td>
+                <td>{{ movimentacao.mov_data }}</td>
             </tr>
             {% endfor %}
         </tbody>
-    </table><br><br>
+    </table><br>
 
-    <p>Fornaça os dados do produto que teve movimentação:</p>
+    <p>Forneça os dados do produto que teve movimentação:</p>
 
     <form action="registrar_movimentacao" method="post">
-        <!-- mov_pro_id: -->
         <label for="mov_pro_id">ID do produto:</label>
-        <input type="number" name="mov_pro_id" id="mov_pro_id"><br>
-        <!-- mov_tipo: -->
+        <input type="number" name="mov_pro_id" id="mov_pro_id" required><br>
+
         <label for="mov_tipo">Tipo de movimentação:</label>
         <select name="mov_tipo" id="mov_tipo" required>
-            <option value="entrada">Entrada</option>
-            <option value="saida">Saída</option>
+            <option value="Entrada">Entrada</option>
+            <option value="Saída">Saída</option>
         </select><br>
-        <!-- mov_data: -->
+
         <label for="mov_data">Data da movimentação:</label>
-        <input type="datetime-local" name="mov_data" id="mov_data"><br>
-        <!-- mov_quantidade: -->
-        <label for="mov_quantidade">Quntidade de Produtos:</label>
-        <input type="number" name="mov_quantidade" id="mov_quantidade"><br>
+        <input type="datetime-local" name="mov_data" id="mov_data" required><br>
+
+        <label for="mov_quantidade">Quantidade de Produtos:</label>
+        <input type="number" name="mov_quantidade" id="mov_quantidade" required><br>
 
         <input type="submit" value="Registrar">
     </form><br>
