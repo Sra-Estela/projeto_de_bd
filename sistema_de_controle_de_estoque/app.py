@@ -130,10 +130,13 @@ def registrar_movimentacao():
 
         conn.commit()
 
-    # Consultar todas as movimentações
+    # Consultar todas as movimentações, incluindo produtos sem movimentações
     cursor.execute('''
-        SELECT * FROM tb_movimentacoes 
-        JOIN tb_produto ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
+        SELECT tb_produto.pro_id, tb_produto.pro_nome, 
+            tb_movimentacoes.mov_quantidade, tb_movimentacoes.mov_tipo, 
+            tb_movimentacoes.mov_data 
+        FROM tb_produto 
+        LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
     ''')
     movimentacoes = cursor.fetchall()
     

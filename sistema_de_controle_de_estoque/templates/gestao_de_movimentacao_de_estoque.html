@@ -23,17 +23,17 @@
         <tbody>
             {% for movimentacao in movimentacoes %}
             <tr>
-                <td>{{ movimentacao.mov_pro_id }}</td>
+                <td>{{ movimentacao.pro_id }}</td>
                 <td>{{ movimentacao.pro_nome }}</td>
-                <td>{{ movimentacao.mov_quantidade }}</td>
-                <td>{{ movimentacao.mov_tipo }}</td>
-                <td>{{ movimentacao.mov_data }}</td>
+                <td>{{ movimentacao.mov_quantidade if movimentacao.mov_quantidade is not none else 'Nenhuma' }}</td>
+                <td>{{ movimentacao.mov_tipo if movimentacao.mov_tipo is not none else 'Nenhuma' }}</td>
+                <td>{{ movimentacao.mov_data if movimentacao.mov_data is not none else 'Nenhuma' }}</td>
             </tr>
             {% endfor %}
         </tbody>
-    </table><br>
+    </table><br><br>
 
-    <p>Forneça os dados do produto que teve movimentação:</p>
+    <h3>Forneça os dados do produto que teve movimentação:</h3><br>
 
     <form action="registrar_movimentacao" method="post">
         <label for="mov_pro_id">ID do produto:</label>

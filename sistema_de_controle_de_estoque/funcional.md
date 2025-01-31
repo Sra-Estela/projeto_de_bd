@@ -331,7 +331,7 @@ button:hover {
     <br>
 
     <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
-    <a href="{{ url_for('gestao_de_movimentacao')}}">Registrar Movimentação</a>
+    <a href="{{ url_for('registrar_movimentacao')}}">Registrar Movimentação</a>
 </body>
 </html>
 
@@ -396,7 +396,6 @@ button:hover {
 
 ### Arquivo `templates/gestao_de_movimentacao_de_estoque.html`:
 ```html
-<!-- templates/gestao_de_movimentacao_de_estoque.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -414,46 +413,41 @@ button:hover {
             <tr>
                 <th>ID Produto</th>
                 <th>Nome</th>
-                <th>Categoria</th>
-                <th>Última Movimentação</th>
                 <th>Quantidade Movimentada</th>
                 <th>Tipo de Movimentação</th>
                 <th>Data</th>
             </tr>
         </thead>
         <tbody>
-            {% for produto in produtos %}
+            {% for movimentacao in movimentacoes %}
             <tr>
-                <td>{{ produto.pro_id }}</td>
-                <td>{{ produto.pro_nome }}</td>
-                <td>{{ produto.cat_nome if produto.cat_nome else 'Sem Categoria' }}</td>
-                <td>{{ produto.mov_id if produto.mov_id else 'Nenhuma Movimentação' }}</td>
-                <td>{{ produto.mov_quantidade if produto.mov_quantidade else '-' }}</td>
-                <td>{{ produto.mov_tipo if produto.mov_tipo else '-' }}</td>
-                <td>{{ produto.mov_data if produto.mov_data else '-' }}</td>
+                <td>{{ movimentacao.mov_pro_id }}</td>
+                <td>{{ movimentacao.pro_nome }}</td>
+                <td>{{ movimentacao.mov_quantidade }}</td>
+                <td>{{ movimentacao.mov_tipo }}</td>
+                <td>{{ movimentacao.mov_data }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table><br><br>
 
-    <p>Fornaça os dados do produto que teve movimentação:</p>
+    <h3>Forneça os dados do produto que teve movimentação:</h3><br>
 
     <form action="registrar_movimentacao" method="post">
-        <!-- mov_pro_id: -->
         <label for="mov_pro_id">ID do produto:</label>
-        <input type="number" name="mov_pro_id" id="mov_pro_id"><br>
-        <!-- mov_tipo: -->
+        <input type="number" name="mov_pro_id" id="mov_pro_id" required><br>
+
         <label for="mov_tipo">Tipo de movimentação:</label>
         <select name="mov_tipo" id="mov_tipo" required>
-            <option value="entrada">Entrada</option>
-            <option value="saida">Saída</option>
+            <option value="Entrada">Entrada</option>
+            <option value="Saída">Saída</option>
         </select><br>
-        <!-- mov_data: -->
+
         <label for="mov_data">Data da movimentação:</label>
-        <input type="datetime-local" name="mov_data" id="mov_data"><br>
-        <!-- mov_quantidade: -->
-        <label for="mov_quantidade">Quntidade de Produtos:</label>
-        <input type="number" name="mov_quantidade" id="mov_quantidade"><br>
+        <input type="datetime-local" name="mov_data" id="mov_data" required><br>
+
+        <label for="mov_quantidade">Quantidade de Produtos:</label>
+        <input type="number" name="mov_quantidade" id="mov_quantidade" required><br>
 
         <input type="submit" value="Registrar">
     </form><br>
@@ -461,7 +455,6 @@ button:hover {
     <a href="{{ url_for('home') }}">Voltar à Página Inicial</a><br><br>
 </body>
 </html>
-
 ```
 
 ---
@@ -715,51 +708,39 @@ def deletar_produto(pro_id):
 # Sei lá:
 @app.route('/gestao_de_movimentacao', methods=['GET', 'POST'])
 def registrar_movimentacao():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Se o método for POST, registre uma nova movimentação
     if request.method == 'POST':
         mov_pro_id = request.form.get('mov_pro_id')
         mov_quantidade = request.form.get('mov_quantidade')
         mov_tipo = request.form.get('mov_tipo')
-        mov_data = request.form.get('mov_date', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        mov_data = request.form.get('mov_data', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
         # Validação de dados
         if not mov_pro_id or not mov_quantidade or not mov_tipo:
             return "Erro: Todos os campos são obrigatórios!"
 
-        # Conectar ao banco
-        conn = get_db_connection()
-        cursor = conn.cursor()
+        # Inserindo a movimentação no banco de dados
+        cursor.execute('''
+            INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
+            VALUES (%s, %s, %s, %s)
+        ''', (mov_pro_id, mov_quantidade, mov_tipo, mov_data))
 
-        try:
-            # Inserindo a movimentação no banco de dados (mov_id autoincrement)
-            cursor.execute('''
-                INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
-                VALUES (%s, %s, %s, %s)
-            ''', (mov_pro_id, mov_quantidade, mov_tipo, mov_data))
+        conn.commit()
 
-            conn.commit()
-
-        except Exception as e:
-            return f"Erro ao registrar movimentação: {e}"
-        
-        finally:
-            cursor.close()
-            conn.close()
-
-        return redirect(url_for('registrar_movimentacao'))
-
-    # Executar a query para obter produtos, categorias e movimentações
-    conn = get_db_connection()
-    cursor = conn.cursor(pymysql.cursors.DictCursor)  # Para obter os resultados como dicionários
+    # Consultar todas as movimentações
     cursor.execute('''
-        SELECT * FROM tb_produto 
-        LEFT JOIN tb_categoria ON tb_categoria.cat_pro_id = tb_produto.pro_id 
-        LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
+        SELECT * FROM tb_movimentacoes 
+        JOIN tb_produto ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
     ''')
-    produtos = cursor.fetchall()
+    movimentacoes = cursor.fetchall()
+    
     cursor.close()
     conn.close()
 
-    return render_template('gestao_de_movimentacao_de_estoque.html', produtos=produtos)
+    return render_template('gestao_de_movimentacao_de_estoque.html', movimentacoes=movimentacoes)
 
 @app.route('/relatorio')
 def relatorio():
