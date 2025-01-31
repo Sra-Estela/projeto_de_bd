@@ -1,9 +1,12 @@
-from flask import Flask, make_response, jsonify, request, url_for, render_template, redirect
+from flask import Flask, make_response, jsonify, request, url_for, render_template, redirect, flash, session
 from datetime import datetime
 import mysql.connector
 import pymysql
 
+
 app = Flask(__name__)
+
+app.secret_key = 'sua_chave_secreta_aqui'  # Adicione uma chave secreta
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -111,7 +114,6 @@ def registrar_movimentacao():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Se o método for POST, registre uma nova movimentação
     if request.method == 'POST':
         mov_pro_id = request.form.get('mov_pro_id')
         mov_quantidade = request.form.get('mov_quantidade')
@@ -120,7 +122,8 @@ def registrar_movimentacao():
 
         # Validação de dados
         if not mov_pro_id or not mov_quantidade or not mov_tipo:
-            return "Erro: Todos os campos são obrigatórios!"
+            flash("Erro: Todos os campos são obrigatórios!", "error")
+            return redirect(url_for('registrar_movimentacao'))
 
         # Inserindo a movimentação no banco de dados
         cursor.execute('''
@@ -130,11 +133,17 @@ def registrar_movimentacao():
 
         conn.commit()
 
+        # Mensagem de sucesso
+        flash("Movimentação registrada com sucesso!", "success")
+
+        # Redirecionar para a mesma página para mostrar as movimentações atualizadas
+        return redirect(url_for('registrar_movimentacao'))
+
     # Consultar todas as movimentações, incluindo produtos sem movimentações
     cursor.execute('''
         SELECT tb_produto.pro_id, tb_produto.pro_nome, 
-            tb_movimentacoes.mov_quantidade, tb_movimentacoes.mov_tipo, 
-            tb_movimentacoes.mov_data 
+               tb_movimentacoes.mov_quantidade, tb_movimentacoes.mov_tipo, 
+               tb_movimentacoes.mov_data 
         FROM tb_produto 
         LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
     ''')

@@ -9,7 +9,17 @@
 </head>
 <body>
     <h1>Registro de Movimentações</h1>
-
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    
     <table border="1">
         <thead>
             <tr>
@@ -32,25 +42,25 @@
             {% endfor %}
         </tbody>
     </table><br><br>
-
+        
     <h3>Forneça os dados do produto que teve movimentação:</h3><br>
 
-    <form action="registrar_movimentacao" method="post">
+    <form action="{{ url_for('registrar_movimentacao') }}" method="post">
         <label for="mov_pro_id">ID do produto:</label>
         <input type="number" name="mov_pro_id" id="mov_pro_id" required><br>
-
+        
         <label for="mov_tipo">Tipo de movimentação:</label>
         <select name="mov_tipo" id="mov_tipo" required>
             <option value="Entrada">Entrada</option>
             <option value="Saída">Saída</option>
         </select><br>
-
+        
         <label for="mov_data">Data da movimentação:</label>
         <input type="datetime-local" name="mov_data" id="mov_data" required><br>
-
+        
         <label for="mov_quantidade">Quantidade de Produtos:</label>
         <input type="number" name="mov_quantidade" id="mov_quantidade" required><br>
-
+        
         <input type="submit" value="Registrar">
     </form><br>
 
