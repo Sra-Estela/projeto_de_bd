@@ -116,7 +116,7 @@ def registrar_movimentacao():
 
     if request.method == 'POST':
         mov_pro_id = request.form.get('mov_pro_id')
-        mov_quantidade = request.form.get('mov_quantidade')
+        mov_quantidade = int(request.form.get('mov_quantidade'))
         mov_tipo = request.form.get('mov_tipo')
         mov_data = request.form.get('mov_data', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -125,11 +125,52 @@ def registrar_movimentacao():
             flash("Erro: Todos os campos são obrigatórios!", "error")
             return redirect(url_for('registrar_movimentacao'))
 
-        # Inserindo a movimentação no banco de dados
+        # Consultar a quantidade atual no estoque
+        cursor.execute('SELECT pro_estoque FROM tb_produto WHERE pro_id = %s', (mov_pro_id,))
+        estoque_atual = cursor.fetchone()
+
+        if estoque_atual is None:
+            flash("Erro: Produto não encontrado!", "error")
+            return redirect(url_for('registrar_movimentacao'))
+
+        estoque_atual = estoque_atual['pro_estoque']
+
+        # Verificar se já existe um registro de movimentação para este produto e data
         cursor.execute('''
-            INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
-            VALUES (%s, %s, %s, %s)
-        ''', (mov_pro_id, mov_quantidade, mov_tipo, mov_data))
+            SELECT mov_id, mov_quantidade FROM tb_movimentacoes 
+            WHERE mov_pro_id = %s AND mov_data = %s
+        ''', (mov_pro_id, mov_data))
+        registro_existente = cursor.fetchone()
+
+        if registro_existente:
+            # Atualizar a movimentação existente
+            nova_quantidade = registro_existente['mov_quantidade'] + mov_quantidade
+            cursor.execute('''
+                UPDATE tb_movimentacoes 
+                SET mov_quantidade = %s, mov_tipo = %s 
+                WHERE mov_id = %s
+            ''', (nova_quantidade, mov_tipo, registro_existente['mov_id']))
+        else:
+            # Inserir nova movimentação
+            cursor.execute('''
+                INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
+                VALUES (%s, %s, %s, %s)
+            ''', (mov_pro_id, mov_quantidade, mov_tipo, mov_data))
+
+        # Atualizando o estoque baseado no movimento
+        if mov_tipo == 'Entrada':
+            novo_estoque = estoque_atual + mov_quantidade
+        elif mov_tipo == 'Saída':
+            if estoque_atual < mov_quantidade:
+                flash("Erro: Estoque insuficiente para a saída!", "error")
+                return redirect(url_for('registrar_movimentacao'))
+            novo_estoque = estoque_atual - mov_quantidade
+
+        cursor.execute('''
+            UPDATE tb_produto 
+            SET pro_estoque = %s 
+            WHERE pro_id = %s
+        ''', (novo_estoque, mov_pro_id))
 
         conn.commit()
 
@@ -139,11 +180,13 @@ def registrar_movimentacao():
         # Redirecionar para a mesma página para mostrar as movimentações atualizadas
         return redirect(url_for('registrar_movimentacao'))
 
-    # Consultar todas as movimentações, incluindo produtos sem movimentações
+    # Consultar todas as movimentações
     cursor.execute('''
         SELECT tb_produto.pro_id, tb_produto.pro_nome, 
-               tb_movimentacoes.mov_quantidade, tb_movimentacoes.mov_tipo, 
-               tb_movimentacoes.mov_data 
+               tb_movimentacoes.mov_quantidade, 
+               tb_movimentacoes.mov_tipo, 
+               tb_movimentacoes.mov_data,
+               tb_produto.pro_estoque
         FROM tb_produto 
         LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
     ''')

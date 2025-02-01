@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Movimentação de Estoque</title>
-    <link rel="stylesheet" href="../static/cadastro_de_produtos.css">
+    <link rel="stylesheet" href="../static/gestao_de_movimentacao_de_estoque.css">
 </head>
 <body>
     <h1>Registro de Movimentações</h1>
@@ -28,6 +28,7 @@
                 <th>Quantidade Movimentada</th>
                 <th>Tipo de Movimentação</th>
                 <th>Data</th>
+                <th>Estoque Atual</th>  <!-- Nova coluna -->
             </tr>
         </thead>
         <tbody>
@@ -36,8 +37,9 @@
                 <td>{{ movimentacao.pro_id }}</td>
                 <td>{{ movimentacao.pro_nome }}</td>
                 <td>{{ movimentacao.mov_quantidade if movimentacao.mov_quantidade is not none else 'Nenhuma' }}</td>
-                <td>{{ movimentacao.mov_tipo if movimentacao.mov_tipo is not none else 'Nenhuma' }}</td>
+                <td class="{% if movimentacao.mov_tipo == 'Entrada' %}tipo-entrada{% else %}tipo-saida{% endif %}">{{ movimentacao.mov_tipo if movimentacao.mov_tipo is not none else 'Nenhuma' }}</td>
                 <td>{{ movimentacao.mov_data if movimentacao.mov_data is not none else 'Nenhuma' }}</td>
+                <td>{{ movimentacao.pro_estoque }}</td>
             </tr>
             {% endfor %}
         </tbody>

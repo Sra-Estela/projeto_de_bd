@@ -17,6 +17,153 @@
 └──requirements.txt
 ```
 
+### Arquivo `static/adicionado.css`:
+```css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    height: auto;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+    margin: 40px 20px;
+    font-weight: lighter;
+}
+
+label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+/* Efeito ao focar no input */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+    background-color: #ffffff;
+}
+
+/* Botão */
+input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Placeholder mais visível */
+textarea, input {
+    font-style: italic;
+}
+
+select {
+    appearance: none;
+    background-color: #f9f9f9;
+    padding-right: 35px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="%23555" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+    cursor: pointer;
+}
+
+/* Ajuste para telas maiores */
+@media (min-width: 600px) {
+    form {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+table {
+    background-color: #ffffff; /* Fundo da tabela */
+}
+
+thead {
+    background-color: #007BFF; /* Cor de fundo do cabeçalho */
+    color: #fff; /* Cor do texto do cabeçalho */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Borda da célula */
+    padding: 5px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+}
+
+ul {
+    padding: 25px;
+}
+
+form > p {
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+li > b {
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+```
+
+---
+
 ### Arquivo `static/cadastro_de_produtos.css`:
 ```css
 * {
@@ -137,49 +284,147 @@ select {
 
 ### Arquivo `static/gestao_de_movimentacao_de_estoque.css`:
 ```css
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 20px;
+* {
+    margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-h1 {
-    text-align: center;}
 
-table {
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    height: auto;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    max-width: 600px;
+    flex-direction: column;
 }
 
-li > b {
-    font-size: 20px;
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+    margin: 40px 20px;
+    font-weight: lighter;
 }
 
-button {
-    font-size: 1em;
-    padding: 8px 15px;
+label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+/* Efeito ao focar no input */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+    background-color: #ffffff;
+}
+
+/* Botão */
+input[type="submit"] {
+    background-color: #007BFF;
     color: #fff;
-    background-color: #e74c3c;  /* Cor vermelha para destacar */
     border: none;
+    padding: 12px 20px;
+    font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 10px;  /* Espaço entre o nome e o botão */
+    width: 100%;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #c0392b;  /* Cor mais escura no hover */
+input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
-button:focus {
-    outline: none;
+/* Placeholder mais visível */
+textarea, input {
+    font-style: italic;
+}
+
+select {
+    appearance: none;
+    background-color: #f9f9f9;
+    padding-right: 35px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="%23555" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+    cursor: pointer;
+}
+
+/* Ajuste para telas maiores */
+@media (min-width: 600px) {
+    form {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+table {
+    background-color: #ffffff; /* Fundo da tabela */
+}
+
+thead {
+    background-color: #007BFF; /* Cor de fundo do cabeçalho */
+    color: #fff; /* Cor do texto do cabeçalho */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Borda da célula */
+    padding: 5px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cor de fundo para linhas pares */
+}
+
+tbody tr:hover {
+    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
+}
+
+.tipo-entrada {
+    color: green; /* Cor para entradas */
+}
+
+.tipo-saida {
+    color: red; /* Cor para saídas */
 }
 ```
 
@@ -293,7 +538,6 @@ button:hover {
     }
 }
 
-
 ```
 
 ---
@@ -307,30 +551,29 @@ button:hover {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Adicionado</title>
-    <link rel="stylesheet" href="../static/gestao_de_movimentacao_de_estoque.css">
+    <link rel="stylesheet" href="../static/adicionado.css">
 </head>
 <body>
     <h1>Produto Adicionado com Sucesso!</h1>
-    <p>Detalhes do produto:</p>
-    <ul>
-        <li><b>ID:</b> {{ produto.pro_id }}</li>
-        <li><b>Nome:</b> {{ produto.pro_nome }}</li>
-        <li><b>Categoria:</b> {{ produto.pro_categoria }}</li>
-        <li><b>Custo Inicial:</b> {{ produto.pro_custo }}</li>
-        <li><b>Preço:</b> {{ produto.pro_preco }}</li>
-        <li><b>N° em Estoque:</b> {{ produto.pro_estoque }}</li>
-        <li><b>Descrição:</b> {{ produto.pro_descricao }}</li>
-        <li><b>Data de Cadastro:</b> {{ produto.pro_data }}</li>
-    </ul>
-    <br>
-
     <!-- Botão Excluir -->
     <form action="{{ url_for('deletar_produto', pro_id=produto.pro_id) }}" method="post">
-        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</button>
+        <p>Detalhes do produto:</p>
+        <ul>
+            <li><b>ID:</b> {{ produto.pro_id }}</li>
+            <li><b>Nome:</b> {{ produto.pro_nome }}</li>
+            <li><b>Categoria:</b> {{ produto.pro_categoria }}</li>
+            <li><b>Custo Inicial:</b> {{ produto.pro_custo }}</li>
+            <li><b>Preço:</b> {{ produto.pro_preco }}</li>
+            <li><b>N° em Estoque:</b> {{ produto.pro_estoque }}</li>
+            <li><b>Descrição:</b> {{ produto.pro_descricao }}</li>
+            <li><b>Data de Cadastro:</b> {{ produto.pro_data }}</li>
+        </ul>
+        <br>
+        <input type="submit" onclick="return confirm('Tem certeza que deseja excluir este produto?')" value="Excluir">
     </form>
     <br>
 
-    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a><br><br>
     <a href="{{ url_for('registrar_movimentacao')}}">Registrar Movimentação</a>
 </body>
 </html>
@@ -403,11 +646,21 @@ button:hover {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Movimentação de Estoque</title>
-    <link rel="stylesheet" href="../static/cadastro_de_produtos.css">
+    <link rel="stylesheet" href="../static/gestao_de_movimentacao_de_estoque.css">
 </head>
 <body>
     <h1>Registro de Movimentações</h1>
-
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    
     <table border="1">
         <thead>
             <tr>
@@ -416,39 +669,41 @@ button:hover {
                 <th>Quantidade Movimentada</th>
                 <th>Tipo de Movimentação</th>
                 <th>Data</th>
+                <th>Estoque Atual</th>  <!-- Nova coluna -->
             </tr>
         </thead>
         <tbody>
             {% for movimentacao in movimentacoes %}
             <tr>
-                <td>{{ movimentacao.mov_pro_id }}</td>
+                <td>{{ movimentacao.pro_id }}</td>
                 <td>{{ movimentacao.pro_nome }}</td>
-                <td>{{ movimentacao.mov_quantidade }}</td>
-                <td>{{ movimentacao.mov_tipo }}</td>
-                <td>{{ movimentacao.mov_data }}</td>
+                <td>{{ movimentacao.mov_quantidade if movimentacao.mov_quantidade is not none else 'Nenhuma' }}</td>
+                <td class="{% if movimentacao.mov_tipo == 'Entrada' %}tipo-entrada{% else %}tipo-saida{% endif %}">{{ movimentacao.mov_tipo if movimentacao.mov_tipo is not none else 'Nenhuma' }}</td>
+                <td>{{ movimentacao.mov_data if movimentacao.mov_data is not none else 'Nenhuma' }}</td>
+                <td>{{ movimentacao.pro_estoque }}</td>  <!-- Exibindo o estoque atual -->
             </tr>
             {% endfor %}
         </tbody>
     </table><br><br>
-
+        
     <h3>Forneça os dados do produto que teve movimentação:</h3><br>
 
-    <form action="registrar_movimentacao" method="post">
+    <form action="{{ url_for('registrar_movimentacao') }}" method="post">
         <label for="mov_pro_id">ID do produto:</label>
         <input type="number" name="mov_pro_id" id="mov_pro_id" required><br>
-
+        
         <label for="mov_tipo">Tipo de movimentação:</label>
         <select name="mov_tipo" id="mov_tipo" required>
             <option value="Entrada">Entrada</option>
             <option value="Saída">Saída</option>
         </select><br>
-
+        
         <label for="mov_data">Data da movimentação:</label>
         <input type="datetime-local" name="mov_data" id="mov_data" required><br>
-
+        
         <label for="mov_quantidade">Quantidade de Produtos:</label>
         <input type="number" name="mov_quantidade" id="mov_quantidade" required><br>
-
+        
         <input type="submit" value="Registrar">
     </form><br>
 
@@ -598,12 +853,15 @@ button:hover {
 
 ### Arquivo `app.py`:
 ```python
-from flask import Flask, make_response, jsonify, request, url_for, render_template, redirect
+from flask import Flask, make_response, jsonify, request, url_for, render_template, redirect, flash, session
 from datetime import datetime
 import mysql.connector
 import pymysql
 
+
 app = Flask(__name__)
+
+app.secret_key = 'sua_chave_secreta_aqui'  # Adicione uma chave secreta
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -711,29 +969,82 @@ def registrar_movimentacao():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Se o método for POST, registre uma nova movimentação
     if request.method == 'POST':
         mov_pro_id = request.form.get('mov_pro_id')
-        mov_quantidade = request.form.get('mov_quantidade')
+        mov_quantidade = int(request.form.get('mov_quantidade'))  # Converter para inteiro
         mov_tipo = request.form.get('mov_tipo')
         mov_data = request.form.get('mov_data', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
         # Validação de dados
         if not mov_pro_id or not mov_quantidade or not mov_tipo:
-            return "Erro: Todos os campos são obrigatórios!"
+            flash("Erro: Todos os campos são obrigatórios!", "error")
+            return redirect(url_for('registrar_movimentacao'))
 
-        # Inserindo a movimentação no banco de dados
+        # Consultar a quantidade atual no estoque
+        cursor.execute('SELECT pro_estoque FROM tb_produto WHERE pro_id = %s', (mov_pro_id,))
+        estoque_atual = cursor.fetchone()
+        
+        if estoque_atual is None:
+            flash("Erro: Produto não encontrado!", "error")
+            return redirect(url_for('registrar_movimentacao'))
+
+        estoque_atual = estoque_atual['pro_estoque']
+
+        # Verificar se já existe um registro de movimentação para este produto e data
         cursor.execute('''
-            INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
-            VALUES (%s, %s, %s, %s)
-        ''', (mov_pro_id, mov_quantidade, mov_tipo, mov_data))
+            SELECT mov_id, mov_quantidade FROM tb_movimentacoes 
+            WHERE mov_pro_id = %s AND mov_data = %s
+        ''', (mov_pro_id, mov_data))
+        registro_existente = cursor.fetchone()
+
+        if registro_existente:
+            # Atualizar a movimentação existente
+            nova_quantidade = registro_existente['mov_quantidade'] + mov_quantidade
+            cursor.execute('''
+                UPDATE tb_movimentacoes 
+                SET mov_quantidade = %s, mov_tipo = %s 
+                WHERE mov_id = %s
+            ''', (nova_quantidade, mov_tipo, registro_existente['mov_id']))
+        else:
+            # Inserir nova movimentação
+            cursor.execute('''
+                INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo, mov_data) 
+                VALUES (%s, %s, %s, %s)
+            ''', (mov_pro_id, mov_quantidade, mov_tipo, mov_data))
+
+        # Atualizando o estoque baseado no movimento
+        if mov_tipo == 'Entrada':
+            novo_estoque = estoque_atual + mov_quantidade
+        elif mov_tipo == 'Saída':
+            if estoque_atual < mov_quantidade:
+                flash("Erro: Estoque insuficiente para a saída!", "error")
+                return redirect(url_for('registrar_movimentacao'))
+            novo_estoque = estoque_atual - mov_quantidade
+
+        cursor.execute('''
+            UPDATE tb_produto 
+            SET pro_estoque = %s 
+            WHERE pro_id = %s
+        ''', (novo_estoque, mov_pro_id))
 
         conn.commit()
 
+        # Mensagem de sucesso
+        flash("Movimentação registrada com sucesso!", "success")
+
+        # Redirecionar para a mesma página para mostrar as movimentações atualizadas
+        return redirect(url_for('registrar_movimentacao'))
+
     # Consultar todas as movimentações
     cursor.execute('''
-        SELECT * FROM tb_movimentacoes 
-        JOIN tb_produto ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
+        SELECT tb_produto.pro_id, tb_produto.pro_nome, 
+               SUM(tb_movimentacoes.mov_quantidade) AS total_movimentada, 
+               MAX(tb_movimentacoes.mov_tipo) AS tipo_movimentacao, 
+               MAX(tb_movimentacoes.mov_data) AS data_ultima_movimentacao,
+               tb_produto.pro_estoque  -- Incluindo o estoque atual
+        FROM tb_produto 
+        LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
+        GROUP BY tb_produto.pro_id, tb_produto.pro_nome
     ''')
     movimentacoes = cursor.fetchall()
     
@@ -745,7 +1056,6 @@ def registrar_movimentacao():
 @app.route('/relatorio')
 def relatorio():
     return render_template('relatorio.html')
-
 ```
 
 ---
@@ -774,12 +1084,13 @@ CREATE TABLE tb_categoria (
 );
 
 CREATE TABLE tb_movimentacoes (
-    mov_id INT PRIMARY KEY AUTO_INCREMENT,
-    mov_pro_id INT,
+    mov_id INT AUTO_INCREMENT PRIMARY KEY,
+    mov_pro_id INT NOT NULL,
     mov_quantidade INT NOT NULL,
     mov_tipo ENUM('Entrada', 'Saída') NOT NULL,
-    mov_data DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (mov_pro_id) REFERENCES tb_produto(pro_id) ON DELETE CASCADE
+    mov_data DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- Define o valor padrão como a data e hora atuais
+    FOREIGN KEY (mov_pro_id) REFERENCES tb_produto(pro_id),
+    UNIQUE KEY unique_mov (mov_pro_id, mov_data)  -- Chave única para evitar duplicação
 );
 
 INSERT INTO tb_produto (pro_id, pro_nome, pro_custo, pro_preco, pro_estoque, pro_descricao) VALUES 
@@ -824,11 +1135,13 @@ INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo) VALUES
 (11, 3, 'Entrada'),
 (12, 9, 'Entrada');
 
+SELECT * FROM tb_movimentacoes;
+
 SELECT * FROM tb_produto 
 LEFT JOIN tb_categoria ON tb_categoria.cat_pro_id = tb_produto.pro_id 
 LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id;
 
-DELETE FROM tb_produto WHERE pro_id=14;
+DELETE FROM tb_produto WHERE pro_id>12;
 ```
 
 ___

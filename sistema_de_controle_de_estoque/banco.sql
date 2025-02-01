@@ -20,12 +20,13 @@ CREATE TABLE tb_categoria (
 );
 
 CREATE TABLE tb_movimentacoes (
-    mov_id INT PRIMARY KEY AUTO_INCREMENT,
-    mov_pro_id INT,
+    mov_id INT AUTO_INCREMENT PRIMARY KEY,
+    mov_pro_id INT NOT NULL,
     mov_quantidade INT NOT NULL,
     mov_tipo ENUM('Entrada', 'Saída') NOT NULL,
-    mov_data DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (mov_pro_id) REFERENCES tb_produto(pro_id) ON DELETE CASCADE
+    mov_data DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- Define o valor padrão como a data e hora atuais
+    FOREIGN KEY (mov_pro_id) REFERENCES tb_produto(pro_id),
+    UNIQUE KEY unique_mov (mov_pro_id, mov_data)  -- Chave única para evitar duplicação
 );
 
 INSERT INTO tb_produto (pro_id, pro_nome, pro_custo, pro_preco, pro_estoque, pro_descricao) VALUES 
@@ -70,8 +71,10 @@ INSERT INTO tb_movimentacoes (mov_pro_id, mov_quantidade, mov_tipo) VALUES
 (11, 3, 'Entrada'),
 (12, 9, 'Entrada');
 
+SELECT * FROM tb_movimentacoes;
+
 SELECT * FROM tb_produto 
 LEFT JOIN tb_categoria ON tb_categoria.cat_pro_id = tb_produto.pro_id 
 LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id;
 
-DELETE FROM tb_produto WHERE pro_id=14;
+DELETE FROM tb_produto WHERE pro_id>12;

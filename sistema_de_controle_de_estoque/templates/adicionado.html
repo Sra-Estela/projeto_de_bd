@@ -5,30 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Adicionado</title>
-    <link rel="stylesheet" href="../static/gestao_de_movimentacao_de_estoque.css">
+    <link rel="stylesheet" href="../static/adicionado.css">
 </head>
 <body>
     <h1>Produto Adicionado com Sucesso!</h1>
-    <p>Detalhes do produto:</p>
-    <ul>
-        <li><b>ID:</b> {{ produto.pro_id }}</li>
-        <li><b>Nome:</b> {{ produto.pro_nome }}</li>
-        <li><b>Categoria:</b> {{ produto.pro_categoria }}</li>
-        <li><b>Custo Inicial:</b> {{ produto.pro_custo }}</li>
-        <li><b>Preço:</b> {{ produto.pro_preco }}</li>
-        <li><b>N° em Estoque:</b> {{ produto.pro_estoque }}</li>
-        <li><b>Descrição:</b> {{ produto.pro_descricao }}</li>
-        <li><b>Data de Cadastro:</b> {{ produto.pro_data }}</li>
-    </ul>
-    <br>
-
     <!-- Botão Excluir -->
     <form action="{{ url_for('deletar_produto', pro_id=produto.pro_id) }}" method="post">
-        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</button>
+        <p>Detalhes do produto:</p>
+        <ul>
+            <li><b>ID:</b> {{ produto.pro_id }}</li>
+            <li><b>Nome:</b> {{ produto.pro_nome }}</li>
+            <li><b>Categoria:</b> {{ produto.pro_categoria }}</li>
+            <li><b>Custo Inicial:</b> {{ produto.pro_custo }}</li>
+            <li><b>Preço:</b> {{ produto.pro_preco }}</li>
+            <li><b>N° em Estoque:</b> {{ produto.pro_estoque }}</li>
+            <li><b>Descrição:</b> {{ produto.pro_descricao }}</li>
+            <li><b>Data de Cadastro:</b> {{ produto.pro_data }}</li>
+        </ul>
+        <br>
+        <input type="submit" onclick="return confirm('Tem certeza que deseja excluir este produto?')" value="Excluir">
     </form>
     <br>
 
-    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
+    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a><br><br>
     <a href="{{ url_for('registrar_movimentacao')}}">Registrar Movimentação</a>
 </body>
 </html>
