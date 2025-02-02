@@ -538,6 +538,7 @@ button:hover {
     }
 }
 
+
 ```
 
 ---
@@ -680,7 +681,7 @@ button:hover {
                 <td>{{ movimentacao.mov_quantidade if movimentacao.mov_quantidade is not none else 'Nenhuma' }}</td>
                 <td class="{% if movimentacao.mov_tipo == 'Entrada' %}tipo-entrada{% else %}tipo-saida{% endif %}">{{ movimentacao.mov_tipo if movimentacao.mov_tipo is not none else 'Nenhuma' }}</td>
                 <td>{{ movimentacao.mov_data if movimentacao.mov_data is not none else 'Nenhuma' }}</td>
-                <td>{{ movimentacao.pro_estoque }}</td>  <!-- Exibindo o estoque atual -->
+                <td>{{ movimentacao.pro_estoque }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -971,7 +972,7 @@ def registrar_movimentacao():
 
     if request.method == 'POST':
         mov_pro_id = request.form.get('mov_pro_id')
-        mov_quantidade = int(request.form.get('mov_quantidade'))  # Converter para inteiro
+        mov_quantidade = int(request.form.get('mov_quantidade'))
         mov_tipo = request.form.get('mov_tipo')
         mov_data = request.form.get('mov_data', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -983,7 +984,7 @@ def registrar_movimentacao():
         # Consultar a quantidade atual no estoque
         cursor.execute('SELECT pro_estoque FROM tb_produto WHERE pro_id = %s', (mov_pro_id,))
         estoque_atual = cursor.fetchone()
-        
+
         if estoque_atual is None:
             flash("Erro: Produto não encontrado!", "error")
             return redirect(url_for('registrar_movimentacao'))
@@ -1038,13 +1039,12 @@ def registrar_movimentacao():
     # Consultar todas as movimentações
     cursor.execute('''
         SELECT tb_produto.pro_id, tb_produto.pro_nome, 
-               SUM(tb_movimentacoes.mov_quantidade) AS total_movimentada, 
-               MAX(tb_movimentacoes.mov_tipo) AS tipo_movimentacao, 
-               MAX(tb_movimentacoes.mov_data) AS data_ultima_movimentacao,
-               tb_produto.pro_estoque  -- Incluindo o estoque atual
+               tb_movimentacoes.mov_quantidade, 
+               tb_movimentacoes.mov_tipo, 
+               tb_movimentacoes.mov_data,
+               tb_produto.pro_estoque
         FROM tb_produto 
         LEFT JOIN tb_movimentacoes ON tb_movimentacoes.mov_pro_id = tb_produto.pro_id
-        GROUP BY tb_produto.pro_id, tb_produto.pro_nome
     ''')
     movimentacoes = cursor.fetchall()
     

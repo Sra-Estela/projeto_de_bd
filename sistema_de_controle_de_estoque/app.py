@@ -23,7 +23,7 @@ def get_db_connection():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
 
 @app.route('/cadastro')
 def cadastro():
@@ -197,6 +197,40 @@ def registrar_movimentacao():
 
     return render_template('gestao_de_movimentacao_de_estoque.html', movimentacoes=movimentacoes)
 
-@app.route('/relatorio')
+# Parte de Relatórios:
+
+@app.route('/relatorio', methods=['GET', 'POST'])
 def relatorio():
-    return render_template('relatorio.html')
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # Produtos com estoque abaixo de 10 unidades
+    cursor.execute('''
+        SELECT pro_id, pro_nome, pro_estoque, pro_custo, pro_preco, pro_descricao 
+        FROM tb_produto 
+        WHERE pro_estoque < 10
+    ''')
+    low_stock_products = cursor.fetchall()
+
+    if request.method == 'POST':
+        # Processar o formulário para o histórico de movimentações e total de entradas/saídas
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
+
+        cursor.execute('''
+            SELECT mov_pro_id, SUM(mov_quantidade) AS total_quantidade, mov_tipo
+            FROM tb_movimentacoes
+            WHERE mov_data BETWEEN %s AND %s
+            GROUP BY mov_pro_id, mov_tipo
+        ''', (start_date, end_date))
+
+        total_movimentacoes = cursor.fetchall()
+
+        cursor.close()
+        db.close()
+
+        return render_template('relatorio.html', low_stock_products=low_stock_products, total_movimentacoes=total_movimentacoes)
+
+    cursor.close()
+    db.close()
+    return render_template('relatorio.html', low_stock_products=low_stock_products)

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="../static/home.css"> 
+</head>
+<body>
+    <header>
+        <h1>Sistema de Controle de Estoque</h1>
+    </header>
+    
+    <main>
+        <a href="{{ url_for('cadastro')}}">Cadastro de Produtos</a>
+        <a href="{{ url_for('registrar_movimentacao')}}">Registrar Movimentação</a>
+        <a href="{{ url_for('relatorio') }}">Relatório dos Registros</a>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Distribuidora.</p>
+    </footer>
+</body>
+</html>
