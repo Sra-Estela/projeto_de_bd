@@ -1,58 +1,51 @@
 body {
-    width: 100vw;
-    height: 100vh; /* Alterado para 100vh */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 0;
-    color: #343a40;
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-image: url('../imgs/distribuidora.png');
+    width: 100dvw;
+    height: 100dvh; /* Alterado para 100vh */
+    background-image: url('imgs//distribuidora.png');
     background-repeat: no-repeat; /* Não repetir a imagem */
     background-size: cover; /* Cobrir toda a área */
     background-position: center; /* Centralizar a imagem */
 }
 
 header {
-background-color: #007BFF;
-color: white;
-padding: 30px 0;
-text-align: center;
-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #007BFF;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 main {
-padding: 20px;
-max-width: 1200px;
-margin: auto;
-text-align: center;
-flex: 1; 
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+    flex: 1; 
 }
 
 a {
-background-color: #007BFF;
-display: inline-block;
-padding: 15px 20px;
-color: #ffffff;
-text-decoration: none;
-border-radius: 5px;
-margin: 10px;
+    background-color: #007BFF;
+    display: inline-block;
+    padding: 15px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px;
 }
 
 a:hover {
-background-color: #0056b3;
-transform: translateY(-2px);
+    background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 footer {
-color:  gray;
-text-align: center;
-padding: 15px 0;
+    color:  gray;
+    text-align: center;
+    padding: 15px 0;
 }
 
 h1 {
-margin: 0;
-font-size: 2.5em;
+    margin: 0;
+    font-size: 2.5em;
 }

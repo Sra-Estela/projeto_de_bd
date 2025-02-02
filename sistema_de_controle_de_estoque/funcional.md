@@ -3,13 +3,21 @@
 ```
 |sistema_de_controle_de_estoque/
 │  ├──__pycache__/
+|  │  ├──distribuidora.png
+|  │  ├──png-clipart-filling-station-fuel-dispenser-cartoon-comics-logo.png
+|  │  └──tabela_do_projeto_bd.png
 │  ├──static/
+│  │  ├──imgs/
+|  │  ├──adicionado.css
 |  │  ├──cadastro_de_produtos.css
 |  │  ├──gestao_de_movimentacao_de_estoque.css
+|  │  ├──home.css
 |  │  └──relatorio.css
 │  ├──templates/
+|  │  ├──adicionado.html
 |  │  ├──cadastro_de_produtos.html
 |  │  ├──gestao_de_movimentacao_de_estoque.html
+|  │  ├──home.html
 |  │  └──relatorio.html
 ├──venv/
 ├──app.py
@@ -430,53 +438,163 @@ tbody tr:hover {
 
 ---
 
-### Arquivo `static/relatorio.css`:
+### Arquivo `static/home.css`:
 ```css
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7f9;
-    color: #333;
+    width: 100vw;
+    height: 100vh; /* Alterado para 100vh */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    color: #343a40;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('../imgs/distribuidora.png');
+    background-repeat: no-repeat; /* Não repetir a imagem */
+    background-size: cover; /* Cobrir toda a área */
+    background-position: center; /* Centralizar a imagem */
+}
+
+header {
+    background-color: #007BFF;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+    flex: 1; 
+}
+
+a {
+    background-color: #007BFF;
+    display: inline-block;
+    padding: 15px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+a:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+footer {
+    color:  gray;
+    text-align: center;
+    padding: 15px 0;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+```
+
+
+### Arquivo `static/relatorio.css`:
+```css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
 }
 
-/* Títulos */
 h1 {
-    color: #2c3e50;
-    margin-top: 20px;
-    text-align: center;
-    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
 }
 
 h2 {
-    color: #34495e;
-    margin-bottom: 10px;
-    font-size: 1.8em;
+    color: #2c3e50;
+    margin-top: 20px;
+    font-size: 2rem;
 }
 
-/* Seções */
-section {
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+h3 {
+    color: #34495e;
+    margin-top: 20px;
+}
+
+/* Formulários */
+form {
+    background-color: #fff;
     padding: 20px;
-    margin: 20px 0;
-    width: 80%;
     border-radius: 10px;
-    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+}
+
+label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
 /* Tabelas */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    margin-top: 20px;
+    background-color: #ffffff;
 }
 
 thead {
-    background-color: #2c3e50;
+    background-color: #007BFF;
     color: #fff;
 }
 
@@ -486,59 +604,21 @@ th, td {
     text-align: center;
 }
 
-
-/* Formulários */
-form {
-    margin-bottom: 20px;
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-label {
-    font-size: 1em;
-    color: #2c3e50;
+tbody tr:hover {
+    background-color: #e0e0e0;
 }
 
-select {
-    font-size: 1em;
-    padding: 5px;
-    margin: 0 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+/* Lista */
+ul {
+    padding: 10px;
+    width: 100%;
+    max-width: 600px;
+    list-style-type: none;
 }
-
-button {
-    font-size: 1em;
-    padding: 8px 15px;
-    color: #fff;
-    background-color: #2c3e50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #2c3e50;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    section {
-        width: 95%;
-    }
-
-    table {
-        font-size: 0.9em;
-    }
-
-    h1 {
-        font-size: 2em;
-    }
-
-    h2 {
-        font-size: 1.5em;
-    }
-}
-
-
 ```
 
 ---
@@ -715,7 +795,7 @@ button:hover {
 
 ---
 
-### Arquivo `templates/index.html`:
+### Arquivo `templates/home.html`:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -723,14 +803,27 @@ button:hover {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
+    <link rel="stylesheet" href="../static/home.css"> 
 </head>
 <body>
-    <a href="{{ url_for('cadastro')}}">Cadastro de Produtos</a><br><br>
-    <a href="{{ url_for('registrar_movimentacao')}}">Registrar Movimentação</a><br><br>
-    <a href="{{ url_for('relatorio') }}">Relatorio dos Registros</a>
+    <header>
+        <h1>Sistema de Controle de Estoque</h1>
+    </header>
+    
+    <main>
+        <a href="{{ url_for('cadastro')}}">Cadastro de Produtos</a>
+        <a href="{{ url_for('registrar_movimentacao')}}">Registrar Movimentação</a>
+        <a href="{{ url_for('relatorio') }}">Relatório dos Registros</a>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Distribuidora.</p>
+    </footer>
 </body>
 </html>
 ```
+
+---
 
 ### Arquivo `templates/relatoria.html`:
 ```html
@@ -741,116 +834,85 @@ button:hover {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios e Consultas Avançadas</title>
+    <link rel="stylesheet" href="../static/relatorio.css">
 </head>
 <body>
-    <form action="relatorio" method="post">
-        <label for="Data">Data:</label><br>
-        <input type="datetime-local" name="data" id="data"><br><br>
-        <!-- --- -->
-        <label for="Categoria">Categoria:</label><br>
-        <input type="text" name="categoria" id="categoria"><br><br>
-        <!-- --- -->
-        <label for="Tipo">Tipo:</label><br>
-        <input type="text" name="tipo" id="tipo"><br><br>
-        <!-- --- -->
-        <label for="Estoque">Estoque:</label><br>
-        <input type="number" name="estoque" id="estoque"><br><br>
-        <!-- --- -->
-        <input type="submit" value="Pesquisar">
-    </form><br>
-    <!-- <section>
-        <h2>Produtos com Estoque Baixo</h2>
-        <p>Lista de produtos com menos de 10 unidades em estoque.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Quantidade</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product in low_stock_products %}
-                <tr>
-                    <td>{{ product['name'] }}</td>
-                    <td>{{ product['description'] }}</td>
-                    <td>{{ product['quantity'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-    
-    <section>
-        <h2>Histórico de Movimentações por Produto</h2>
-        <p>Selecione um produto para visualizar todas as suas movimentações de estoque.</p>
-        <form method="GET" action="/movements">
-            <label for="product_id">Produto:</label>
-            <select id="product_id" name="product_id">
-                {% for product in all_products %}
-                <option value="{{ product['id'] }}">{{ product['name'] }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">Ver Movimentações</button>
-        </form>
+    <h1>Relatórios de Estoque</h1>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Quantidade</th>
-                    <th>Motivo</th>
-                    <th>Tipo</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for movement in movements %}
-                <tr>
-                    <td>{{ movement['date'] }}</td>
-                    <td>{{ movement['quantity'] }}</td>
-                    <td>{{ movement['reason'] }}</td>
-                    <td>{{ movement['type'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-    <section>
-        <h2>Total de Entradas e Saídas</h2>
-        <p>Escolha um intervalo de datas para visualizar o total de movimentações de estoque.</p>
-    </section> -->
-    <table border="1">
+    <h2>Produtos com Estoque Baixo</h2>
+    <table>
         <thead>
             <tr>
-                <th>ID Produto</th>
+                <th>ID do Produto</th>
                 <th>Nome</th>
-                <th>Categoria</th>
-                <th>Última Movimentação</th>
-                <th>Quantidade Movimentada</th>
-                <th>Tipo de Movimentação</th>
-                <th>Data</th>
+                <th>Quantidade em Estoque</th>
+                <th>Custo</th>
+                <th>Preço</th>
+                <th>Descrição</th>
             </tr>
         </thead>
         <tbody>
-            {% for produto in produtos %}
+            {% for produto in low_stock_products %}
             <tr>
                 <td>{{ produto.pro_id }}</td>
                 <td>{{ produto.pro_nome }}</td>
-                <td>{{ produto.cat_nome if produto.cat_nome else 'Sem Categoria' }}</td>
-                <td>{{ produto.mov_id if produto.mov_id else 'Nenhuma Movimentação' }}</td>
-                <td>{{ produto.mov_quantidade if produto.mov_quantidade else '-' }}</td>
-                <td>{{ produto.mov_tipo if produto.mov_tipo else '-' }}</td>
-                <td>{{ produto.mov_data if produto.mov_data else '-' }}</td>
+                <td>{{ produto.pro_estoque }}</td>
+                <td>{{ produto.pro_custo }}</td>
+                <td>{{ produto.pro_preco }}</td>
+                <td>{{ produto.pro_descricao }}</td>
             </tr>
             {% endfor %}
         </tbody>
-    </table><br>
+    </table>
 
-    <a href="{{ url_for('home') }}">Voltar à Página Inicial</a>
+    <h2>Histórico de Movimentações por Produto</h2>
+    <form method="POST" action="/relatorio">
+        <label for="product_id">Selecione um produto:</label>
+        <select name="product_id" id="product_id" required>
+            {% for produto in low_stock_products %}
+            <option value="{{ produto.pro_id }}">{{ produto.pro_nome }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Ver Movimentações">
+    </form>
+
+    <h2>Total de Entradas e Saídas por Período</h2>
+    <form method="POST" action="/relatorio">
+        <label for="start_date">Data de Início:</label>
+        <input type="datetime-local" name="start_date" id="start_date" required>
+        
+        <label for="end_date">Data de Fim:</label>
+        <input type="datetime-local" name="end_date" id="end_date" required>
+        
+        <input type="submit" value="Calcular Total">
+    </form>
+
+    {% if total_movimentacoes %}
+    <h3>Relatório de Movimentações</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID do Produto</th>
+                <th>Total Quantidade</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movimentacao in total_movimentacoes %}
+            <tr>
+                <td>{{ movimentacao.mov_pro_id }}</td>
+                <td>{{ movimentacao.total_quantidade }}</td>
+                <td>{{ movimentacao.mov_tipo }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 </body>
 </html>
 ```
+
+---
 
 ### Arquivo `app.py`:
 ```python
@@ -879,7 +941,7 @@ def get_db_connection():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
 
 @app.route('/cadastro')
 def cadastro():
@@ -1053,9 +1115,43 @@ def registrar_movimentacao():
 
     return render_template('gestao_de_movimentacao_de_estoque.html', movimentacoes=movimentacoes)
 
-@app.route('/relatorio')
+# Parte de Relatórios:
+
+@app.route('/relatorio', methods=['GET', 'POST'])
 def relatorio():
-    return render_template('relatorio.html')
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    # Produtos com estoque abaixo de 10 unidades
+    cursor.execute('''
+        SELECT pro_id, pro_nome, pro_estoque, pro_custo, pro_preco, pro_descricao 
+        FROM tb_produto 
+        WHERE pro_estoque < 10
+    ''')
+    low_stock_products = cursor.fetchall()
+
+    if request.method == 'POST':
+        # Processar o formulário para o histórico de movimentações e total de entradas/saídas
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
+
+        cursor.execute('''
+            SELECT mov_pro_id, SUM(mov_quantidade) AS total_quantidade, mov_tipo
+            FROM tb_movimentacoes
+            WHERE mov_data BETWEEN %s AND %s
+            GROUP BY mov_pro_id, mov_tipo
+        ''', (start_date, end_date))
+
+        total_movimentacoes = cursor.fetchall()
+
+        cursor.close()
+        db.close()
+
+        return render_template('relatorio.html', low_stock_products=low_stock_products, total_movimentacoes=total_movimentacoes)
+
+    cursor.close()
+    db.close()
+    return render_template('relatorio.html', low_stock_products=low_stock_products)
 ```
 
 ---

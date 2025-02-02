@@ -197,6 +197,7 @@ def registrar_movimentacao():
 
     return render_template('gestao_de_movimentacao_de_estoque.html', movimentacoes=movimentacoes)
 
+
 # Parte de Relatórios:
 
 @app.route('/relatorio', methods=['GET', 'POST'])
